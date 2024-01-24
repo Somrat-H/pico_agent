@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pico_agent/common/constant.dart';
 import 'package:pico_agent/features/auth/application/auth_serviece.dart';
 import 'package:pico_agent/features/auth/presentation/widget/custom_formfield.dart';
+import 'package:pico_agent/model/doctor_model.dart';
 import 'package:pico_agent/model/hospital_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -92,6 +93,7 @@ class AddHospitalInformation extends StatelessWidget {
                     final prefs = await SharedPreferences.getInstance();
                     final userid = await prefs.get('uid');
                     AuthService.setHospitalData(HospitalModel(
+
                         id: userid.toString(),
                         name: nameController.value.text,
                         area: areaController.value.text,
@@ -99,7 +101,16 @@ class AddHospitalInformation extends StatelessWidget {
                         phone: phoneController.value.text,
                         opensAt: opentimeController.value.text,
                         closeAt: closetimeController.value.text,
-                        weekend: weekendController.value.text));
+                        weekend: weekendController.value.text,
+                        ambulance: ambulanceController.value.text,
+                        email: emailController.value.text,
+                        image: logoController.value.text,
+                        numberofIcus: icuController.value.text,
+                        parking: parkingController.value.text,
+                        website: websiteController.value.text,
+                        description: descriptionController.value.text,
+                    
+                        ));
                   },
                   child: Text("Submit"))
             ],

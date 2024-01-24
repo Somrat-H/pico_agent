@@ -25,6 +25,7 @@ class DoctorDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     TextTheme textTheme = const TextTheme();
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Padding(

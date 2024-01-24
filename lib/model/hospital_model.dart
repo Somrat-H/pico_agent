@@ -1,17 +1,17 @@
 import 'package:pico_agent/model/doctor_model.dart';
 
 class HospitalModel {
-  final String id;
-  final String area;
-  final String name;
-  final String location;
-  final String phone;
+  final String? id;
+  final String ?area;
+  final String ?name;
+  final String ?location;
+  final String ?phone;
   final String description;
   final String website;
   final String email;
-  final String opensAt;
-  final String closeAt;
-  final String weekend;
+  final String ?opensAt;
+  final String ?closeAt;
+  final String ?weekend;
   final String? image;
   final double? ratings;
   final String? ambulance;
@@ -21,14 +21,14 @@ class HospitalModel {
   final List<DoctorModel> drList;
 
   HospitalModel({
-    required this.id,
-    required this.name,
-    required this.area,
-    required this.location,
-    required this.phone,
-    required this.opensAt,
-    required this.closeAt,
-    required this.weekend,
+     this.id,
+     this.name,
+     this.area,
+     this.location,
+     this.phone,
+     this.opensAt,
+     this.closeAt,
+     this.weekend,
     this.description = '',
     this.website = '',
     this.email = '',

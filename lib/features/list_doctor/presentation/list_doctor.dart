@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pico_agent/model/doctor_model.dart';
 
 
 import '../../../app_route.dart';
@@ -15,6 +16,7 @@ class ListDoctor extends StatefulWidget {
 }
 
 class _ListDoctorState extends State<ListDoctor> {
+  List<DoctorModel> doctorList = [];
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = const TextTheme();
@@ -49,7 +51,7 @@ class _ListDoctorState extends State<ListDoctor> {
                           children: [
                             Row(
                               children: [
-                                Text(doctorList[index].name),
+                                Text(doctorList[index].drName),
                                 hpad10,
                                 SizedBox(
                                   height: 30,
@@ -59,7 +61,7 @@ class _ListDoctorState extends State<ListDoctor> {
                               ],
                             ),
                             Text(
-                              "Specialization : ${doctorList[index].specialization}",
+                              "Specialization : ${doctorList[index].dept}",
                               style: textTheme.titleSmall,
                             ),
                           ],
@@ -67,7 +69,10 @@ class _ListDoctorState extends State<ListDoctor> {
                         subtitle: Row(
                           children: [
                             Text(
-                                "Phone Number : ${doctorList[index].phoneNumber}"),
+                                // "Phone Number : ${doctorList[index]}"
+                                ""
+                                
+                                ),
                           ],
                         ),
                         trailing: IconButton(
