@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:pico_agent/common/constant.dart';
 import 'package:pico_agent/model/doctor_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,14 +25,27 @@ class AuthService {
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        debugPrint('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        debugPrint('Wrong password provided for that user.');
       }
       return false;
     }
   }
-
+   static Future<bool> logout(
+      ) async {
+    try {
+      final credential = await FirebaseAuth.instance.signOut();
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == '') {
+        debugPrint('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        debugPrint('Wrong password provided for that user.');
+      }
+      return false;
+    }
+  }
   static Future<HospitalModel?> getHospitaldata() async {
     // DocumentReference docRef = collectionRef.doc('userid to fetch hospital details');
     final _firestore = FirebaseFirestore.instance;
@@ -48,22 +62,7 @@ class AuthService {
     }
     return null;
   }
-  static Future<HospitalModel?> getDoctordata() async {
-    // DocumentReference docRef = collectionRef.doc('userid to fetch hospital details');
-    final _firestore = FirebaseFirestore.instance;
-    final prefs = await SharedPreferences.getInstance();
-    final userid = await prefs.get('uid');
-    final snapshot = await _firestore
-        .collection('hospitals')
-        .where("id", isEqualTo: userid)
-        .get();
-    if (snapshot.docs.isNotEmpty) {
-      final hospital =
-          snapshot.docs.map((e) => HospitalModel.fromJson(e.data())).single;
-      return hospital;
-    }
-    return null;
-  }
+
   static Future<void> setHospitalData(HospitalModel hospitalModel) async {
     // DocumentReference docRef = collectionRef.doc('userid to fetch hospital details');
     final _firestore = FirebaseFirestore.instance;
@@ -75,7 +74,8 @@ class AuthService {
         .doc(userid.toString())
         .set(hospitalModel.toJson());
   }
-   static Future<void> setDoctorData(HospitalModel hospitalModel) async {
+
+  static Future<void> setDoctorData(HospitalModel hospitalModel) async {
     // DocumentReference docRef = collectionRef.doc('userid to fetch hospital details');
     final _firestore = FirebaseFirestore.instance;
     final prefs = await SharedPreferences.getInstance();
@@ -87,6 +87,3 @@ class AuthService {
         .update(hospitalModel.toJson());
   }
 }
-
- 
-

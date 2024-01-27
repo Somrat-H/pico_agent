@@ -1,13 +1,98 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'dart:html' as html;
 
+import 'package:mime_type/mime_type.dart';
+import 'package:path/path.dart' as Path;
+import 'package:image_picker_web/image_picker_web.dart';
 import '../../../app_route.dart';
 import '../../../common/constant.dart';
+import 'package:image_picker/image_picker.dart';
 part 'widget.dart';
 
-class ReportUpload extends StatelessWidget {
+class ReportUpload extends StatefulWidget {
   const ReportUpload({super.key});
+
+  @override
+  State<ReportUpload> createState() => _ReportUploadState();
+}
+
+class _ReportUploadState extends State<ReportUpload> {
+  File? _pickedImage;
+
+  List<File> selectedImages = [];
+
+  showLoaderDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(
+              margin: EdgeInsets.only(left: 7),
+              child: Text("Uploading.......")),
+        ],
+      ),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+// Function to upload images and store paths
+  Future<void> uploadImagesAndStorePaths() async {
+    for (final imageFile in selectedImages) {
+      final fileName = imageFile.path.split('/').last;
+      final reference =
+          FirebaseStorage.instance.ref().child('images/$fileName');
+      final uploadTask = reference.putFile(imageFile);
+
+      final snapshot = await uploadTask;
+      final imagePath = snapshot.ref.fullPath; // Store this path in your list
+
+      print(imagePath);
+    }
+  }
+
+  Uint8List webImage = Uint8List(8);
+
+  Future<void> _pickImage() async {
+    if (!kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var selected = File(image.path);
+        setState(() {
+          _pickedImage = selected;
+        });
+      } else {
+        print('No image has been picked');
+      }
+    } else if (kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      final List<XFile> _pickedImage = await _picker.pickMultiImage();
+      if (_pickedImage != null) {
+        // var f = await image.readAsBytes();
+        _pickedImage.forEach((e) {
+          selectedImages.add(e.path as File);
+        });
+        setState(() {});
+      } else {
+        print('No image has been picked');
+      }
+    } else {
+      print('Something went wrong');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +128,9 @@ class ReportUpload extends StatelessWidget {
                             onPressed: () {
                               // Add file upload logic here
                               print('File Upload Button Pressed');
+                              _pickImage();
                             },
-                            child: Text('Upload Report'),
+                            child: Text('Select Image'),
                           ),
                         ),
                       ],
@@ -54,6 +140,29 @@ class ReportUpload extends StatelessWidget {
               ),
             ),
           ),
+          Container(
+            height: 100,
+            width: 100,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                  itemCount: selectedImages.length,
+                  itemBuilder: (_, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.file(selectedImages[index]),
+                    );
+                  }),
+            ),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                showLoaderDialog(context);
+                uploadImagesAndStorePaths();
+                // Navigator.pop(context);
+                context.go(AppRoute.reportUpload);
+              },
+              child: Text("Upload")),
         ],
       ),
     );

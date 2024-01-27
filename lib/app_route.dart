@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pico_agent/features/add_pathogoly/presentation/add_pathology.dart';
+import 'package:pico_agent/features/list_pathology/list_pathology.dart';
 
 import 'core/not_found_screen.dart';
 import 'features/add_doctor/presentation/add_doctor.dart';
@@ -18,7 +20,10 @@ class AppRoute {
 
   static String login = '/';
   static String addDoctor = '/consol/addDoctor';
+  static String addPathology = '/consol/addPathology';
   static String listDoctor = '/consol/listDoctor';
+  static String listPathology = '/consol/listPathology';
+
   static String detailsDoctor = '/consol/detailsDoctor';
   static String appoinments = '/consol/appoinments';
   static String cancledAppoinments = '/consol/cancledAppoinments';
@@ -34,7 +39,6 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: "/",
       pageBuilder: pageBuilder(const LoginScreen()),
-      
     ),
     migo,
   ],
@@ -60,8 +64,16 @@ final ShellRoute migo = ShellRoute(
         pageBuilder: pageBuilder(const AddDoctor()),
       ),
       GoRoute(
+        path: "/consol/addPathology",
+        pageBuilder: pageBuilder(const AddPathology()),
+      ),
+      GoRoute(
         path: "/consol/listDoctor",
         pageBuilder: pageBuilder(const ListDoctor()),
+      ),
+      GoRoute(
+        path: "/consol/listPathology",
+        pageBuilder: pageBuilder(const ListPathology()),
       ),
       GoRoute(
         path: "/consol/detailsDoctor",

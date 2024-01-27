@@ -1,7 +1,7 @@
 import 'package:pico_agent/common/constant.dart';
 
 class DoctorModel {
-  String? id;
+  String ? id;
   String drImage;
   String drName;
   String dept;
@@ -14,6 +14,7 @@ class DoctorModel {
   String fee;
   List<String> schedule = [];
   List<String> availableSlot = [];
+  
 
   DoctorModel({
     this.id,

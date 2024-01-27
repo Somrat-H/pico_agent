@@ -1,5 +1,4 @@
-part of 'add_doctor.dart';
-
+part of 'add_pathology.dart';
 class _RoundedTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;

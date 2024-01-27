@@ -35,10 +35,14 @@ class HomeScreenView extends StatelessWidget {
                   } else if (index == 2) {
                     context.go(AppRoute.listDoctor);
                   } else if (index == 3) {
-                    context.go(AppRoute.addDoctor);
+                    context.go(AppRoute.listPathology);
                   } else if (index == 4) {
-                    context.go(AppRoute.reportUpload);
+                    context.go(AppRoute.addDoctor);
                   } else if (index == 5) {
+                    context.go(AppRoute.addPathology);
+                  } else if (index == 6) {
+                    context.go(AppRoute.reportUpload);
+                  } else if (index == 7) {
                     context.go(AppRoute.prescriptionUpload);
                   }
                 },

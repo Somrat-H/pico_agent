@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pico_agent/model/hospital_model.dart';
 
 int i = -1;
 SizedBox vpad10 = const SizedBox(
@@ -37,3 +38,5 @@ SizedBox hpad8 = const SizedBox(
 SizedBox hpad12 = const SizedBox(
   width: 12,
 );
+
+HospitalModel? mainHospitalModel;

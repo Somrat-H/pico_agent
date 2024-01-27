@@ -1,3 +1,4 @@
+import 'package:pico_agent/features/appointment/application/appointment_model.dart';
 import 'package:pico_agent/model/doctor_model.dart';
 
 class HospitalModel {
@@ -19,6 +20,7 @@ class HospitalModel {
   final String? numberofIcus;
   final List<Pathelogy> pathelogyList;
   final List<DoctorModel> drList;
+  final List<ComfirmAppoinmentModel> confirmAppointmentList;
 
   HospitalModel({
      this.id,
@@ -39,6 +41,7 @@ class HospitalModel {
     this.parking,
     this.pathelogyList = const [],
     this.drList = const [],
+    this.confirmAppointmentList = const [],
   });
 
   factory HospitalModel.fromJson( Map<String, dynamic> json) {
@@ -65,6 +68,10 @@ class HospitalModel {
         drList: (json['drList'] as List<dynamic>)
             .map((e) => DoctorModel.fromJson(e as Map<String, dynamic>))
             .toList(),
+         confirmAppointmentList: (json['confirmAppointmentList'] as List<dynamic>)
+            .map((e) => ComfirmAppoinmentModel
+            .fromJson(e as Map<String, dynamic>))
+            .toList(),    
       );
   }
 
@@ -87,8 +94,11 @@ class HospitalModel {
         'numberofIcus': numberofIcus,
         'pathelogyList': pathelogyList.map((e) => e.toJson()).toList(),
         'drList': drList.map((e) => e.toJson()).toList(),
+        'confirmAppointmentList' : confirmAppointmentList.map((e) => e.toJson()).toList(),
       };
 }
+
+
 
 class Pathelogy {
   String name;

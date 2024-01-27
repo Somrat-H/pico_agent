@@ -59,7 +59,7 @@ class DoctorDetails extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Doctor Name : ${doctorList[i].name}',
+                        'Doctor Name : ${mainHospitalModel!.drList[i].drName}',
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -69,7 +69,7 @@ class DoctorDetails extends StatelessWidget {
                   ),
                   vpad8,
                   Text(
-                    'Medical Name: ${doctorList[i].hospitalName}',
+                    'About: ${mainHospitalModel!.drList[i].about}',
                     style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w100,
@@ -84,7 +84,7 @@ class DoctorDetails extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(doctorList[i].specialization),
+                        child: Text(mainHospitalModel!.drList[i].dept),
                       )),
                   vpad15,
                   Row(
@@ -96,7 +96,7 @@ class DoctorDetails extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        doctorList[i].passingYear,
+                       mainHospitalModel!.drList[i].passingYear,
                         style: const TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
@@ -113,7 +113,7 @@ class DoctorDetails extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        doctorList[i].registrationNumber,
+                       mainHospitalModel!.drList[i].registrationNumber,
                         style: const TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
@@ -124,13 +124,13 @@ class DoctorDetails extends StatelessWidget {
                   Row(
                     children: [
                       const Text(
-                        'Passed Medical College : ',
+                        'Seen Paitent : ',
                         style: TextStyle(
                           color: Colors.black54,
                         ),
                       ),
                       Text(
-                        doctorList[i].medicalCollageName,
+                       mainHospitalModel!.drList[i].totalSeenPatient,
                         style: const TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,

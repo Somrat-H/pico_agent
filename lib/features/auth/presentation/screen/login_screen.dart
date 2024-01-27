@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pico_agent/common/constant.dart';
 import 'package:pico_agent/features/auth/application/auth_serviece.dart';
 import 'package:pico_agent/features/auth/presentation/add_hospital_information.dart';
 import 'package:pico_agent/model/hospital_model.dart';
@@ -23,6 +24,25 @@ class _LoginScreenState extends State<LoginScreen> {
   AuthService _authService = AuthService();
 
   bool isDone = false;
+
+  showLoaderDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(
+              margin: EdgeInsets.only(left: 7), child: Text("Loging.......")),
+        ],
+      ),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   // void login() async {
   //   String uid = "";
@@ -100,13 +120,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       ElevatedButton(
                         onPressed: () async {
                           // ignore: unrelated_type_equality_checks
-
-                        final bool isC = await AuthService.login(userNameController: _userNameController.value.text, passwordController: _passwordController.value.text);
-                        final hospitalModel = await AuthService.getHospitaldata();
-                        isC == true ? hospitalModel != null ? context.go(AppRoute.home) : Navigator.push(context, MaterialPageRoute(builder: (_)=> AddHospitalInformation())): null;
-                        
-
-                          
+                          showLoaderDialog(context);
+                          final bool isC = await AuthService.login(
+                              userNameController:
+                                  _userNameController.value.text,
+                              passwordController:
+                                  _passwordController.value.text);
+                          mainHospitalModel =
+                              await AuthService.getHospitaldata();
+                          if (isC == true) {
+                            Navigator.pop(context);
+                          }
+                          isC == true
+                              ? mainHospitalModel != null
+                                  ? context.go(AppRoute.home)
+                                  : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              AddHospitalInformation()))
+                              : null;
                         },
                         child: Text('Login'),
                       ),

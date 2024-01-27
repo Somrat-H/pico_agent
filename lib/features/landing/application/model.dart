@@ -8,8 +8,10 @@ List<OurServiece> ourServices = [
   OurServiece(servieceName: "Appointment", servieceLogo: "assets/appointment.png"),
   OurServiece(servieceName: "Cancel Appointment", servieceLogo: "assets/cancel_appointment.png"),
   OurServiece(servieceName: "Doctor List", servieceLogo: "assets/doctor_list.png"),
+    OurServiece(servieceName: "Pathology List", servieceLogo: "assets/pathology_page.png"),
   OurServiece(servieceName: "Doctor Add", servieceLogo: "assets/add.png"),
-  
+  OurServiece(servieceName: "Pathology Add", servieceLogo: "assets/pathology.png"),
   OurServiece(servieceName: "Report Upload", servieceLogo: "assets/upload.png"),
   OurServiece(servieceName: "Prescription Upload", servieceLogo: "assets/upload.png"),
+
 ];
